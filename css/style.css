@@ -110,12 +110,13 @@ body > * {
 }
 
 .output {
-    display: flex;
-    flex-direction: row-reverse;
-    flex-wrap: wrap-reverse;
+    display: grid;
     gap: 2rem;
+    grid-auto-rows: 30rem;
+    grid-template-columns: repeat(auto-fit, 20rem);
     justify-content: center;
     padding-top: 8rem;
+    width: 100%;
 }
 
 .output .entry {
@@ -124,9 +125,13 @@ body > * {
     border-radius: 1rem;
     display: flex;
     font-size: 8rem;
-    height: 30rem;
     justify-content: center;
-    width: 20rem;
+    transition: opacity 0.25s;
+}
+
+.output .entry:hover {
+    cursor: pointer;
+    opacity: 0.8;
 }
 
 @media only screen and (max-width: 800px) {
