@@ -31,7 +31,6 @@ body {
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    justify-content: center;
     min-height: 100vh;
     padding: 2rem;
     transition: background-color 0.25s;
@@ -113,7 +112,6 @@ body > * {
 .output {
     display: flex;
     flex-direction: row-reverse;
-    flex-grow: 1;
     flex-wrap: wrap-reverse;
     gap: 2rem;
     justify-content: center;
