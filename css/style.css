@@ -50,6 +50,7 @@ body > * {
     position: fixed;
     top: 2rem;
     width: calc(100% - 4rem);
+    z-index: 1;
 }
 
 .input .search-bar {
