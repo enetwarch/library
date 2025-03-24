@@ -41,7 +41,7 @@ body > * {
     max-width: 1200px;
 }
 
-.input {
+.input-container {
     background-color: var(--dark-2);
     border-radius: 1rem;
     display: flex;
@@ -49,78 +49,80 @@ body > * {
     padding: 1rem;
     position: fixed;
     top: 2rem;
-    width: calc(100% - 4rem);
+    width: calc(100% - 3rem);
     z-index: 1;
 }
 
-.input .search-bar {
+.search-bar {
     color: var(--light-1);
     display: flex;
     flex-grow: 1;
-    font-size: 2rem;
+    font-size: 1.5rem;
     position: relative;
 }
 
-.input .search-bar .fa-solid.fa-magnifying-glass {
+.search-icon {
     color: var(--light-1);
-    margin-left: 1rem;
-    margin-top: 1rem;
+    margin-left: 0.75rem;
+    margin-top: 0.75rem;
     position: absolute;
 }
 
-.input .search-bar #search {
+#searchInput {
     background-color: var(--dark-3);
     border: none;
     border-radius: 1rem;
     color: var(--light-1);
-    font-size: 2rem;
-    height: 4rem;
+    font-size: 1.5rem;
+    height: 3rem;
     padding: 1rem;
-    padding-left: 4rem;
+    padding-left: 3rem;
     width: 100%;
 }
 
-.input .search-bar #search::placeholder {
+#searchInput::placeholder {
     color: var(--light-3);
 }
 
-.input .search-bar #search::-webkit-search-cancel-button {
+#searchInput::-webkit-search-cancel-button {
     appearance: none;
 }
 
-.input .search-bar #search:focus {
+#searchInput:focus {
     outline: none;
 }
 
-.input #newEntry {
+#newEntry {
     align-items: center;
     background-color: var(--blue);
     border-radius: 1rem;
     color: var(--light-1);
     display: flex;
-    font-size: 2rem;
+    font-size: 1.5rem;
     justify-content: center;
-    min-height: 4rem;
-    min-width: 4rem;
+    min-height: 3rem;
+    min-width: 3rem;
     transition: opacity 0.25s;
 }
 
-.input #newEntry:hover {
+#newEntry:hover,
+#newEntry:active, 
+#newEntry:focus {
     cursor: pointer;
     opacity: 0.8;
 }
 
-.output {
+.output-container {
     display: grid;
     gap: 2rem;
-    grid-auto-rows: 30rem;
-    grid-template-columns: repeat(auto-fit, 20rem);
+    grid-auto-rows: 22.5rem;
+    grid-template-columns: repeat(auto-fit, 15rem);
     justify-content: center;
     padding-top: 8rem;
     width: 100%;
 }
 
-.output .entry {
+.entry {
     align-items: center;
     background-color: var(--light-2);
     border-radius: 1rem;
@@ -130,13 +132,9 @@ body > * {
     transition: opacity 0.25s;
 }
 
-.output .entry:hover {
+.entry:hover,
+.entry:active,
+.entry:focus {
     cursor: pointer;
     opacity: 0.8;
-}
-
-@media only screen and (max-width: 800px) {
-    html {
-        font-size: 12px;
-    }
 }
