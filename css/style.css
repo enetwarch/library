@@ -105,10 +105,11 @@ body > * {
     transition: opacity 0.25s;
 }
 
-#newEntry:hover,
-#newEntry:active, 
-#newEntry:focus {
+#newEntry:hover {
     cursor: pointer;
+}
+
+#newEntry:active {
     opacity: 0.9;
 }
 
@@ -134,8 +135,7 @@ body > * {
 }
 
 .entry:hover,
-.entry:active,
-.entry:focus {
+.entry:active {
     cursor: pointer;
     opacity: 0.9;
 }
@@ -268,6 +268,27 @@ body > * {
     gap: 0.5rem;
 }
 
+.radio-field-input {
+    display: none;
+}
+
+.radio-field-input:checked + .custom-radio-button.fa-square-check {
+    color: var(--green);
+}
+
+.radio-field-input:checked + .custom-radio-button.fa-square-minus {
+    color: var(--blue);
+}
+
+.radio-field-input:checked + .custom-radio-button.fa-square-xmark {
+    color: var(--red);
+}
+
+.custom-radio-button {
+    color: var(--dark-2);
+    font-size: 1.25rem;
+}
+
 .radio-field-label {
     color: var(--light-1);
     font-size: 16px;
@@ -276,4 +297,22 @@ body > * {
 .radio-field-input:hover,
 .radio-field-label:hover {
     cursor: pointer;
+}
+
+.submit-button {
+    background-color: var(--blue);
+    border: none;
+    border-radius: 0.5rem;
+    color: var(--light-1);
+    font-size: 16px;
+    padding: 1rem;
+    transition: opacity 0.25s;
+}
+
+.submit-button:hover {
+    cursor: pointer;
+}
+
+.submit-button:active {
+    opacity: 0.9;
 }
