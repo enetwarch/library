@@ -1,56 +1,70 @@
-document.addEventListener("contextmenu", event => {
-    event.preventDefault();
-});
-
 window.addEventListener("load", () => {
+    document.addEventListener("contextmenu", event => event.preventDefault());
+
     const entries = [
-        ["The World After the Fall", "Dropped", "https://meo.comick.pictures/vo82y.jpg", ""],
-        ["Omniscient Reader's Viewpoint", "Reading", "https://meo.comick.pictures/qv5oqL.jpg", ""],
-        ["Solo Leveling", "Completed", "https://meo.comick.pictures/zevXM.jpg", ""],
+        ["The World After the Fall", "https://meo.comick.pictures/vo82y.jpg", "dropped", ""],
+        ["Omniscient Reader's Viewpoint", "https://meo.comick.pictures/qv5oqL.jpg", "reading", ""],
+        ["Solo Leveling", "https://meo.comick.pictures/zevXM.jpg", "completed", ""],
     ];
 
-    const container = document.getElementById("output");
     entries.forEach(entry => {
         const entryObject = new Entry(entry);
-        entryObject.displayEntry(container);
+    });
+
+    const modalForm = document.getElementById("modalForm");
+    const newEntry = document.getElementById("newEntry");
+    const modalClose = document.getElementById("modalClose");
+    newEntry.addEventListener("click", () => modalForm.showModal());
+    modalClose.addEventListener("click", () => modalForm.close());
+
+    const description = document.getElementById("description");
+    description.addEventListener("input", () => {
+        description.style.height = "auto";
+        description.style.height = `${description.scrollHeight}px`;
+    });
+
+    const entryForm = document.getElementById("entryForm");
+    entryForm.addEventListener("submit", event => {
+        event.preventDefault();
+
+        let entry = [];
+        const formData = new FormData(entryForm);
+        for (const data of formData.entries()) {
+            entry.push(data[1]);
+        }
+
+        const libraryEntry = new Entry(entry);
+
+        modalForm.close();
     });
 });
 
-document.getElementById("newEntry").addEventListener("click", () => {
-    const modal = document.getElementById("modal");
-    if (!modal) {
-        throw Error("No modal detected.");
-    }
-
-    modal.showModal();
-});
-
-document.getElementById("modalClose").addEventListener("click", () => {
-    const modal = document.getElementById("modal");
-    if (!modal) {
-        throw Error("No modal detected.");
-    }
-
-    modal.close();
-});
-
-document.getElementById("description").addEventListener("input", function() {
-    this.style.height = "auto";
-    this.style.height = `${this.scrollHeight}px`;
-});
-
-function Entry(entry) {
+function Entry(data) {
     if (!new.target) {
         throw Error(`Use the "new" keyword on the Entry constructor.`);
     }
 
-    this.title = entry[0];
-    this.status = entry[1];
-    this.image = entry[2];
-    this.description = entry[3];
+    if (data instanceof FormData) {
+        this.title = formData.get("title");
+        this.image = formData.get("image");
+        this.status = formData.get("status");
+        this.description = formData.get("description");    
+    } else if (typeof data === "object") {
+        this.title = data[0];
+        this.image = data[1];
+        this.status = data[2];
+        this.description = data[3];
+    }
+
+    this.displayEntry();
 }
 
-Entry.prototype.displayEntry = function(container) {
+Entry.prototype.displayEntry = function() {
+    const container = document.getElementById("output");
+    if (!container) {
+        throw Error("Entry container does not exist.");
+    }
+
     const entry = document.createElement("div");
     entry.classList.add("entry");
 
@@ -62,15 +76,15 @@ Entry.prototype.displayEntry = function(container) {
     const entryStatus = document.createElement("i");
     entryStatus.classList.add("entry-status", "fa-solid");
     switch (this.status) {
-        case "Completed": {
+        case "completed": {
             entryStatus.classList.add("fa-square-check");
             break;
         }
-        case "Reading": {
+        case "reading": {
             entryStatus.classList.add("fa-square-minus");
             break;
         }
-        case "Dropped": {
+        case "dropped": {
             entryStatus.classList.add("fa-square-xmark");
             break;
         }
