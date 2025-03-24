@@ -9,11 +9,34 @@ window.addEventListener("load", () => {
         ["Solo Leveling", "Completed", "https://meo.comick.pictures/zevXM.jpg", ""],
     ];
 
-    const container = document.querySelector(".output-container");
+    const container = document.getElementById("output");
     entries.forEach(entry => {
         const entryObject = new Entry(entry);
         entryObject.displayEntry(container);
     });
+});
+
+document.getElementById("newEntry").addEventListener("click", () => {
+    const modal = document.getElementById("modal");
+    if (!modal) {
+        throw Error("No modal detected.");
+    }
+
+    modal.showModal();
+});
+
+document.getElementById("modalClose").addEventListener("click", () => {
+    const modal = document.getElementById("modal");
+    if (!modal) {
+        throw Error("No modal detected.");
+    }
+
+    modal.close();
+});
+
+document.getElementById("description").addEventListener("input", function() {
+    this.style.height = "auto";
+    this.style.height = `${this.scrollHeight}px`;
 });
 
 function Entry(entry) {

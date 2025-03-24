@@ -19,9 +19,43 @@
                 <i class="fa-solid fa-plus"></i>
             </div>    
         </div>
-        <div class="output-container">
+        <div id="output" class="output-container">
 
         </div>
+        <dialog id="modal" class="modal">
+            <form class="modal-container">
+                <i id="modalClose" class="modal-close-icon fa-solid fa-xmark"></i>
+                <div class="form-field">
+                    <label class="form-field-label" for="title">Title</label>
+                    <input id="title" class="form-field-input" name="title" type="text" placeholder="Solo Leveling" required>
+                </div>
+                <div class="form-field">
+                    <label class="form-field-label" for="image">Image</label>
+                    <input id="image" class="form-field-input" name="image" type="text" placeholder="https://meo.comick.pictures/zevXM.jpg" required>
+                </div>
+                <div class="form-field">
+                    <label class="form-field-label" for="status">Status</label>
+                    <div class="radio-container">
+                        <div class="radio-field">
+                            <input id="completed" class="radio-field-label" name="status" value="completed" type="radio">
+                            <label class="radio-field-label" for="completed">Completed</label>
+                        </div>
+                        <div class="radio-field">
+                            <input id="reading" class="radio-field-label" name="status" value="reading" type="radio" selected>
+                            <label class="radio-field-label" for="reading">Reading</label>
+                        </div>
+                        <div class="radio-field">
+                            <input id="dropped" class="radio-field-label" name="status" value="dropped" type="radio">
+                            <label class="radio-field-label" for="dropped">Dropped</label>
+                        </div>    
+                    </div>
+                </div>
+                <div class="form-field">
+                    <label class="form-field-label" for="description">Description</label>
+                    <textarea id="description" class="form-field-input" name="description" placeholder="Optional"></textarea>
+                </div>
+            </form>
+        </dialog>
         <script src="js/script.js" async defer></script>
     </body>
 </html>
