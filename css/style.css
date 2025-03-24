@@ -152,7 +152,7 @@ body > * {
     background-image: linear-gradient(var(--light-1), var(--light-1));
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 16px 16px;
+    background-size: calc(2rem / 1.5) calc(2rem / 1.5);
     font-size: 2rem;
     position: absolute;
     right: 1rem;
@@ -275,7 +275,7 @@ body > * {
     background-image: linear-gradient(var(--light-1), var(--light-1));
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 12px 12px;
+    background-size: calc(1rem / 1.5) calc(1rem / 1.5);
 }
 
 .radio-field-input:checked + .custom-radio-button.fa-square-check {

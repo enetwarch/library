@@ -7,9 +7,7 @@ window.addEventListener("load", () => {
         ["Solo Leveling", "https://meo.comick.pictures/zevXM.jpg", "completed", ""],
     ];
 
-    entries.forEach(entry => {
-        const entryObject = new Entry(entry);
-    });
+    entries.forEach(entry => new Entry(entry));
 
     const modalForm = document.getElementById("modalForm");
     const newEntry = document.getElementById("newEntry");
@@ -34,7 +32,7 @@ window.addEventListener("load", () => {
         }
 
         const libraryEntry = new Entry(entry);
-
+        entryForm.reset();
         modalForm.close();
     });
 });
@@ -70,8 +68,16 @@ Entry.prototype.displayEntry = function() {
 
     const entryImage = document.createElement("img");
     entryImage.classList.add("entry-image");
-    entryImage.src = this.image;
     entryImage.alt = this.title;
+    fetch(this.image).then(response => {
+        if (response.ok) return response.blob();
+    }).then(blob => {
+        const url = URL.createObjectURL(blob);
+        entryImage.src = url;
+    }).catch(error => {
+        console.error(error);
+        entryImage.src = "img/404.svg";
+    });
 
     const entryStatus = document.createElement("i");
     entryStatus.classList.add("entry-status", "fa-solid");
