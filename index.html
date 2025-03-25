@@ -11,11 +11,11 @@
     </head>
     <body>
         <div class="input-container">
-            <div class="search-bar">
+            <div class="search-field">
                 <i class="search-icon fa-solid fa-magnifying-glass"></i>
-                <input id="searchInput" type="search" placeholder="Search">
+                <input id="searchInput" class="search-input" type="search" placeholder="Search">
             </div>
-            <div id="newEntry">
+            <div id="newEntry" class="new-entry-button">
                 <i class="fa-solid fa-plus"></i>
             </div>    
         </div>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-field">
                     <label class="form-field-label" for="image">Image</label>
-                    <input id="image" class="form-field-input" name="image" type="text" placeholder="Image URL" required>
+                    <input id="image" class="form-field-input" name="image" type="text" placeholder="URL" required>
                 </div>
                 <div class="form-field">
                     <p class="form-field-label">Status</p>
@@ -60,6 +60,6 @@
                 <button class="submit-button" type="submit">Create Entry</button>
             </form>
         </dialog>
-        <script src="js/script.js" async defer></script>
+        <script type="module" src="js/main.js" async defer></script>
     </body>
 </html>
