@@ -175,6 +175,7 @@ body > * {
     bottom: 1rem;
     color: var(--light-1);
     left: 1rem;
+    padding-right: 1rem;
     position: absolute;
 }
 

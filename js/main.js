@@ -1,7 +1,6 @@
 import entries from "./modules/entries.json" with { "type": "json" };
 import Entry from "./modules/entry.js";
 
-
 window.addEventListener("load", () => {
     document.addEventListener("contextmenu", event => event.preventDefault());
 
