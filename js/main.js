@@ -26,8 +26,7 @@ window.addEventListener("load", () => {
 
     const entryFormElement = document.getElementById("entryForm");
     const entryForm = new Form(entryFormElement, formData => {
-        const entry = new Entry(formData);
-        entries.push(entry);
+        library.addEntry(formData);
         modalForm.closeModal();
     });
 

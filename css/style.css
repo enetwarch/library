@@ -332,6 +332,7 @@ body > * {
     float: left;
     height: 22.5rem;
     margin-right: 1rem;
+    margin-bottom: 0.2rem;
     object-fit: cover;
     width: 15rem;
 }
@@ -339,6 +340,8 @@ body > * {
 .modal-entry-title {
     color: var(--light-1);
     margin-bottom: 1rem;
+    word-break: break-word;
+    padding-right: 1.5rem;
 }
 
 .modal-entry-description {
