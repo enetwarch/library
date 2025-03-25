@@ -20,7 +20,9 @@ Library.prototype.addEntry = function(data) {
         throw TypeError("data argument needs to be an object.");
     }
 
-    const entry = new Entry(data);
+    const id = this.entries.length;
+    const entry = new Entry(data, id);
+    
     entry.loadEntry(this.container);
     this.entries.push(entry);
 }
@@ -39,15 +41,19 @@ Library.prototype.addListener = function(type, callback) {
     }
 
     this.container.addEventListener(type, event => {
-        if (!(event.target.closest(".entry"))) {
+        const element = event.target.closest(".entry");
+        if (!element) {
             return;
         }
 
-        callback(event);
+        const id = element.dataset.id;
+        const entry = this.entries[id];
+
+        callback(entry);
     });
 }
 
-function Entry(data) {
+function Entry(data, id) {
     if (!new.target) {
         throw Error(`Use the "new" keyword on the Entry constructor.`);
     }
@@ -60,8 +66,13 @@ function Entry(data) {
         throw TypeError("data argument needs to be an object.");
     }
 
+    if (typeof id !== "number") {
+        throw TypeError("id argument needs to be a number.");
+    }
+
     this.entry = document.createElement("div");
     this.entry.classList.add("entry");
+    this.entry.dataset.id = id;
 }
 
 Entry.prototype.parseFormData = function(formData) {

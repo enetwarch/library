@@ -38,7 +38,17 @@ window.addEventListener("load", () => {
     const entryTitle = document.getElementById("entryTitle");
     const entryDescription = document.getElementById("entryDescription");
 
-    library.addListener("click", event => {
-        modalEntry.showModal();
+    library.addListener("click", (entry) => {
+        if (typeof entry !== "object") {
+            throw TypeError("entry argument needs to be an object.");
+        }
+
+        entryImage.src = entry.image;
+        entryTitle.innerText = entry.title;
+        entryDescription.innerText = entry.description;
+
+        setTimeout(() => {
+            modalEntry.showModal();
+        }, 100);
     });
 });
