@@ -8,9 +8,7 @@ window.addEventListener("load", () => {
 
     const modalForm = document.getElementById("modalForm");
     const newEntry = document.getElementById("newEntry");
-    const modalClose = document.getElementById("modalClose");
-    newEntry.addEventListener("click", () => modalForm.showModal());
-    modalClose.addEventListener("click", () => modalForm.close());
+    new Modal(modalForm, newEntry);
 
     const description = document.getElementById("description");
     description.addEventListener("input", () => {
@@ -28,3 +26,4 @@ window.addEventListener("load", () => {
         modalForm.close();
     });
 });
+

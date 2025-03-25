@@ -211,7 +211,7 @@ body > * {
     width: 100%;
 }
 
-.modal-close-icon {
+.modal-close {
     color: var(--light-1);
     position: absolute;
     right: 1rem;
@@ -219,7 +219,7 @@ body > * {
     z-index: 1;
 }
 
-.modal-close-icon:hover {
+.modal-close:hover {
     cursor: pointer;
 }
 
