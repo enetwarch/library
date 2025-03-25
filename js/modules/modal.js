@@ -3,14 +3,14 @@ export default function Modal(modal, open) {
         throw Error(`Use the "new" keyword on the Modal constructor.`);
     }
 
-    if (!(modal instanceof HTMLElement)) {
+    this.modal = modal;
+    if (!(this.modal instanceof HTMLElement)) {
         throw TypeError("modal argument needs to be an HTML Element.");
-    } else if (!(open instanceof HTMLElement)) {
-        throw TypeError("open argument needs to be an HTML Element.");
     }
 
-    this.modal = modal;
-    this.open = open;
+    if (open) {
+        this.open = open;
+    }
 
     this.container = this.modal.querySelector(".modal-container");
     if (!this.container) {
@@ -25,10 +25,20 @@ export default function Modal(modal, open) {
     this.addListeners();
 }
 
+Modal.prototype.showModal = function() {
+    this.modal.showModal();
+}
+
+Modal.prototype.closeModal = function() {
+    this.modal.close();
+}
+
 Modal.prototype.addListeners = function() {
-    this.open.addEventListener("click", () => {
-        this.showModal();
-    });
+    if (this.open) {
+        this.open.addEventListener("click", () => {
+            this.showModal();
+        });
+    }
 
     this.close.addEventListener("click", () => {
         this.closeModal();
@@ -39,12 +49,4 @@ Modal.prototype.addListeners = function() {
             this.closeModal();
         }
     });
-}
-
-Modal.prototype.showModal = function() {
-    this.modal.showModal();
-}
-
-Modal.prototype.closeModal = function() {
-    this.modal.close();
 }

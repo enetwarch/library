@@ -39,7 +39,7 @@ Library.prototype.addListener = function(type, callback) {
     }
 
     this.container.addEventListener(type, event => {
-        if (!(event.target.classList.contains("entry"))) {
+        if (!(event.target.closest(".entry"))) {
             return;
         }
 
