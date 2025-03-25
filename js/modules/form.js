@@ -3,27 +3,17 @@ export default function Form(form, submit) {
         throw Error(`Use the "new" keyword on the Form constructor.`);
     }
 
-    if (!form || typeof form !== "object") {
-        throw Error("Form is not a valid DOM element.");
+    if (!(form instanceof HTMLElement)) {
+        throw TypeError("form argument needs to be an HTML Element.");
+    } else if (typeof submit !== "function") {
+        throw TypeError("submit argument needs to be an HTML Element.");
     }
-    this.form = form;
 
-    if (!submit || typeof submit !== "function") {
-        throw Error("Form submit action is not a valid function.");
-    }
+    this.form = form;
     this.submit = submit;
 
     this.addInputListeners();
     this.addSubmitListener();
-}
-
-Form.prototype.addSubmitListener = function() {
-    this.form.addEventListener("submit", event => {
-        event.preventDefault();
-        const formData = new FormData(this.form);
-        this.submit(formData);
-        this.form.reset();
-    });
 }
 
 Form.prototype.addInputListeners = function() {
@@ -34,4 +24,15 @@ Form.prototype.addInputListeners = function() {
             description.style.height = `${description.scrollHeight}px`;
         });
     }
+}
+
+Form.prototype.addSubmitListener = function() {
+    this.form.addEventListener("submit", event => {
+        event.preventDefault();
+
+        const formData = new FormData(this.form);
+        this.submit(formData);
+
+        this.form.reset();
+    });
 }

@@ -3,27 +3,24 @@ export default function Modal(modal, open) {
         throw Error(`Use the "new" keyword on the Modal constructor.`);
     }
 
-    if (!modal) {
-        throw Error("Modal does not exist.");
+    if (!(modal instanceof HTMLElement)) {
+        throw TypeError("modal argument needs to be an HTML Element.");
+    } else if (!(open instanceof HTMLElement)) {
+        throw TypeError("open argument needs to be an HTML Element.");
     }
-    this.modal = modal;
 
-    if (!open) {
-        throw Error("Modal has no open button.");
-    }
+    this.modal = modal;
     this.open = open;
 
-    const container = this.modal.querySelector(".modal-container");
-    if (!container) {
+    this.container = this.modal.querySelector(".modal-container");
+    if (!this.container) {
         throw Error("Modal has no container.");
     }
-    this.container = container;
 
-    const close = this.modal.querySelector(".modal-close");
+    this.close = this.modal.querySelector(".modal-close");
     if (!close) {
         throw Error("Modal has no close button.");
     }
-    this.close = close;
 
     this.addListeners();
 }
