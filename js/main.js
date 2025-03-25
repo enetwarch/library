@@ -1,6 +1,7 @@
 import sample from "./modules/sample.json" with { "type": "json" };
 import Modal from "./modules/modal.js";
 import Entry from "./modules/entry.js";
+import Form from "./modules/form.js";
 
 window.addEventListener("load", () => {
     document.addEventListener("contextmenu", event => event.preventDefault());
@@ -17,25 +18,13 @@ window.addEventListener("load", () => {
         localStorage.setItem("entries", JSON.stringify(entries));
     });
 
-    const modalForm = document.getElementById("modalForm");
-    const newEntry = document.getElementById("newEntry");
-    new Modal(modalForm, newEntry);
+    const modalFormElement = document.getElementById("modalForm");
+    const newEntryElement = document.getElementById("newEntry");
+    const modalForm = new Modal(modalFormElement, newEntryElement);
 
-    const description = document.getElementById("description");
-    description.addEventListener("input", () => {
-        description.style.height = "auto";
-        description.style.height = `${description.scrollHeight}px`;
-    });
-
-    const entryForm = document.getElementById("entryForm");
-    entryForm.addEventListener("submit", event => {
-        event.preventDefault();
-
-        const formData = new FormData(entryForm);
+    const entryForm = new Form(document.getElementById("entryForm"), formData => {
         const entry = new Entry(formData);
         entries.push(entry);
-
-        entryForm.reset();
-        modalForm.close();
+        modalForm.closeModal();
     });
 });

@@ -27,11 +27,11 @@
                 <i class="modal-close fa-solid fa-xmark"></i>
                 <div class="form-field">
                     <label class="form-field-label" for="title">Title</label>
-                    <input id="title" class="form-field-input" name="title" type="text" placeholder="Title" required>
+                    <input id="title" class="form-field-input" name="title" type="text" placeholder="Solo Leveling" required>
                 </div>
                 <div class="form-field">
-                    <label class="form-field-label" for="image">Image</label>
-                    <input id="image" class="form-field-input" name="image" type="text" placeholder="URL" required>
+                    <label class="form-field-label" for="image">Image URL</label>
+                    <input id="image" class="form-field-input" name="image" type="url" placeholder="https://meo.comick.pictures/zevXM.jpg" required>
                 </div>
                 <div class="form-field">
                     <p class="form-field-label">Status</p>
@@ -54,11 +54,26 @@
                     </div>
                 </div>
                 <div class="form-field">
-                    <label class="form-field-label" for="description">Description</label>
-                    <textarea id="description" class="form-field-input" name="description" placeholder="Optional"></textarea>
+                    <label class="form-field-label" for="description">Description (Optional)</label>
+                    <textarea id="description" class="form-field-input" name="description" placeholder="10 years ago..."></textarea>
                 </div>
                 <button class="submit-button" type="submit">Create Entry</button>
             </form>
+        </dialog>
+        <dialog id="modalEntry" class="modal">
+            <div class="modal-container">
+                <i class="modal-close fa-solid fa-xmark"></i>
+                <div class="modao-entry-container">
+                    <img class="modal-entry-image" src="https://meo.comick.pictures/zevXM.jpg">
+                    <h3 class="modal-entry-title">Solo Leveling</h3>
+                    <p class="modal-entry-description">10 years ago, after “the Gate” that connected the real world with the monster world opened, some of the ordinary, everyday people received the power to hunt monsters within the Gate. They are known as “Hunters”. However, not all Hunters are powerful. My name is Sung Jin-Woo, an E-rank Hunter. I'm someone who has to risk his life in the lowliest of dungeons, the “World's Weakest”. Having no skills whatsoever to display, I barely earned the required money by fighting in low-leveled dungeons… at least until I found a hidden dungeon with the hardest difficulty within the D-rank dungeons! In the end, as I was accepting death, I suddenly received a strange power, a quest log that only I could see, a secret to leveling up that only I know about! If I trained in accordance with my quests and hunted monsters, my level would rise. Changing from the weakest Hunter to the strongest S-rank Hunter!</p>
+                    <div class="button-container">
+                        <div class="delete-button" type="button">Delete</div>
+                        <div class="edit-button" type="button">Edit</div>
+                        <div class="read-button" type="button">Read</div>
+                    </div>
+                </div>
+            </div>
         </dialog>
         <script type="module" src="js/main.js" async defer></script>
     </body>

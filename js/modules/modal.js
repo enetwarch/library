@@ -30,16 +30,24 @@ export default function Modal(modal, open) {
 
 Modal.prototype.addListeners = function() {
     this.open.addEventListener("click", () => {
-        this.modal.showModal();
+        this.showModal();
     });
 
     this.close.addEventListener("click", () => {
-        this.modal.close();
+        this.closeModal();
     });
 
     this.modal.addEventListener("click", event => {
         if (event.target === this.modal) {
-            this.modal.close();
+            this.closeModal();
         }
     });
+}
+
+Modal.prototype.showModal = function() {
+    this.modal.showModal();
+}
+
+Modal.prototype.closeModal = function() {
+    this.modal.close();
 }
