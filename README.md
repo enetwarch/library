@@ -2,8 +2,8 @@
 
 A basic library that contains books. Heavily inspired from [Tachiyomi](https://github.com/tachiyomiorg). This simple web application replicates the basics of **CRUD (Create, Read, Update, and Delete)** operations. 
 
-> [!NOTE]
-> Unrelated to the project, but I read my mangas/manhwas/manhuas using the [Mihon](https://mihon.app/) app. It is a free and open source fork of Tachiyomi.
+> [!WARNING]
+> The program still has unresolved bugs.
 
 ### Books
 
@@ -26,3 +26,6 @@ The books I chose for this project are my favorite manhwas, including the popula
     * [Square Check](https://fontawesome.com/icons/square-check): Completed Status
     * [Square Minus](https://fontawesome.com/icons/square-minus): Reading Status
     * [Square Xmark](https://fontawesome.com/icons/square-xmark): Dropped Status
+
+> [!NOTE]
+> Unrelated to the project, but I read my mangas/manhwas/manhuas using the [Mihon](https://mihon.app/) app. It is a free and open source fork of Tachiyomi.
