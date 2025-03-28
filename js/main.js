@@ -94,7 +94,7 @@ Main.prototype.createEntry = function(formData) {
     this.modalForm.closeModal();
 }
 
-Main.prototype.readEntry = function(entry) {
+Main.prototype.readEntry = async function(entry) {
     if (typeof entry !== "object") {
         throw TypeError("entry argument needs to be an object.");
     } 
@@ -110,7 +110,7 @@ Main.prototype.readEntry = function(entry) {
     const entryImageElement = this.getElementById("entryImage");
 
     entryTitleElement.innerText = entry.title;
-    entryImageElement.src = entry.image;
+    entryImageElement.src = await entry.getImage();
     this.currentEntryId = entry.entry.dataset.id;
 
     this.modalEntry.showModal();
