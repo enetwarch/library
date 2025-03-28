@@ -11,7 +11,6 @@ export default function Library(library, dataset) {
 
     this.library = library;    
     this.entries = [];
-    this.currentId = 0;
 
     dataset.forEach(data => this.addEntry(data));
 }
@@ -21,8 +20,8 @@ Library.prototype.addEntry = function(data) {
         throw TypeError("data argument needs to be an object.");
     }
 
-    const entry = new Entry(data, this.currentId);
-    this.currentId++;
+    const id = this.entries.length;
+    const entry = new Entry(data, id);
     
     entry.loadEntry(this.library);
     this.entries.push(entry);
@@ -56,11 +55,13 @@ Library.prototype.deleteEntry = function(id) {
         return;
     }
 
-    matchingEntry.entry.remove();
-
     this.entries = this.entries.filter(entry => {
-        return entry !== matchingEntry;
+        const entryId = entry.entry.dataset.id;
+        return entryId !== id;
     });
+
+    matchingEntry.entry.remove();
+    this.reassignIds();
 }
 
 Library.prototype.findEntry = function(id) {
@@ -74,6 +75,19 @@ Library.prototype.findEntry = function(id) {
     });
 
     return matchingEntry;
+}
+
+Library.prototype.reassignIds = function() {
+    const originalLength = this.entries.length;
+
+    this.entries = this.entries.map((entry, index) => {
+        entry.entry.dataset.id = index;
+        return entry;
+    });
+
+    if (this.entries.length !== originalLength) {
+        throw Error("Reassigning IDs changed the length of this.entries array.");
+    }
 }
 
 Library.prototype.addListener = function(type, callback) {

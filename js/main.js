@@ -21,7 +21,7 @@ window.addEventListener("load", () => {
     }
 
     window.addEventListener("beforeunload", () => {
-        const entries = JSON.strigify(library.entries);
+        const entries = JSON.stringify(library.entries);
         localStorage.setItem("entries", entries);
     });
 
@@ -38,7 +38,7 @@ function Main(library) {
     }
 
     this.library = library;
-    this.currentEntryId = "-1";
+    this.selectedEntryId = "-1";
 
     this.entryForm = this.initializeEntryForm();
     this.modalForm = this.initializeModalForm();
@@ -111,17 +111,17 @@ Main.prototype.readEntry = async function(entry) {
 
     entryTitleElement.innerText = entry.title;
     entryImageElement.src = await entry.getImage();
-    this.currentEntryId = entry.entry.dataset.id;
+    this.selectedEntryId = entry.entry.dataset.id;
 
     this.modalEntry.showModal();
 }
 
 Main.prototype.updateEntry = function() {
-    const entry = this.library.findEntry(this.currentEntryId);
+    const entry = this.library.findEntry(this.selectedEntryId);
     this.entryForm.insertValues(entry);
 
     this.entryForm.changeSubmitListener(formData => {
-        this.library.updateEntry(formData, this.currentEntryId);
+        this.library.updateEntry(formData, this.selectedEntryId);
 
         this.modalForm.closeModal();
         this.modalEntry.closeModal();
@@ -133,7 +133,9 @@ Main.prototype.updateEntry = function() {
 }
 
 Main.prototype.deleteEntry = function() {
-    this.library.deleteEntry(this.currentEntryId);
+    this.library.deleteEntry(this.selectedEntryId);
+    this.selectedEntryId = "-1";
+
     this.modalEntry.closeModal();
 }
 
