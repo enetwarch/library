@@ -3,7 +3,7 @@
 A basic library that contains books. Heavily inspired from [Tachiyomi](https://github.com/tachiyomiorg). This simple web application replicates the basics of **CRUD (Create, Read, Update, and Delete)** operations. 
 
 > [!WARNING]
-> The program still has unresolved bugs.
+> The program might still have unresolved bugs.
 
 ### Books
 
