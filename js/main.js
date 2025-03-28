@@ -5,8 +5,8 @@ import Form from "./modules/form.js";
 
 window.addEventListener("load", () => {
     let library;
-    const storedEntries = localStorage.getItem("entries");
     const libraryElement = document.getElementById("library");
+    const storedEntries = localStorage.getItem("entries");
 
     if (!storedEntries) {
         const sampleEntries = structuredClone(entries);
@@ -31,15 +31,16 @@ window.addEventListener("load", () => {
     const entryFormElement = document.getElementById("entryForm");
     const entryForm = new Form(entryFormElement);
     
-    entryForm.changeSubmitListener(formData => {
+    const createEntry = formData => {
         library.addEntry(formData);
         modalForm.closeModal();
-    });
+    }
 
-    let currentEntryId;
+    entryForm.changeSubmitListener(createEntry);
 
     const entryImageElement = document.getElementById("entryImage");
     const entryTitleElement = document.getElementById("entryTitle");
+    let currentEntryId;
 
     library.addListener("click", entry => {
         if (typeof entry !== "object") {
@@ -50,9 +51,7 @@ window.addEventListener("load", () => {
         entryImageElement.src = entry.image;
         currentEntryId = entry.entry.dataset.id;
 
-        setTimeout(() => {
-            modalEntry.showModal();
-        }, 100);
+        modalEntry.showModal();
     });
 
     const modalEntryElement = document.getElementById("modalEntry");
@@ -63,14 +62,22 @@ window.addEventListener("load", () => {
 
     modalEntry.addCallback("open", () => {
         let deleteFunction = () => {
-            const entryId = Number(currentEntryId);
-            library.deleteEntry(entryId);
-            
+            library.deleteEntry(currentEntryId);
             modalEntry.closeModal();
         }
 
         let editFunction = () => {
+            const entry = library.findEntry(currentEntryId);
+            entryForm.insertValues(entry);
 
+            entryForm.changeSubmitListener(formData => {
+                library.updateEntry(formData, currentEntryId);
+                modalForm.closeModal();
+                modalEntry.closeModal();
+                entryForm.changeSubmitListener(createEntry);
+            });
+
+            modalForm.showModal();
         }
 
         deleteElement.addEventListener("click", deleteFunction);

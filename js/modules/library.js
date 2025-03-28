@@ -28,16 +28,30 @@ Library.prototype.addEntry = function(data) {
     this.entries.push(entry);
 }
 
-Library.prototype.deleteEntry = function(id) {
-    if (typeof id !== "number") {
-        throw TypeError("id argument needs to be a number.");
+Library.prototype.updateEntry = function(data, id) {
+    if (typeof data !== "object") {
+        throw TypeError("data argument needs to be an object.");
+    } else if (typeof id !== "string") {
+        throw TypeError("id argument needs to be a string.");
     }
 
-    const matchingEntry = this.entries.find(entry => {
-        const entryId = entry.entry.dataset.id;
-        return Number(entryId) === id;
-    });
+    const entry = this.findEntry(id);
 
+    if (data instanceof FormData) {
+        entry.parseFormData(data);
+    } else {
+        entry.parseJSON(data);
+    }
+
+    entry.updateEntry();
+}
+
+Library.prototype.deleteEntry = function(id) {
+    if (typeof id !== "string") {
+        throw TypeError("id argument needs to be a string.");
+    }
+
+    const matchingEntry = this.findEntry(id);
     if (!matchingEntry) {
         return;
     }
@@ -47,6 +61,19 @@ Library.prototype.deleteEntry = function(id) {
     this.entries = this.entries.filter(entry => {
         return entry !== matchingEntry;
     });
+}
+
+Library.prototype.findEntry = function(id) {
+    if (typeof id !== "string") {
+        throw TypeError("id argument needs to be a string.");
+    }
+
+    const matchingEntry = this.entries.find(entry => {
+        const entryId = entry.entry.dataset.id;
+        return entryId === id;
+    });
+
+    return matchingEntry;
 }
 
 Library.prototype.addListener = function(type, callback) {
@@ -118,7 +145,7 @@ Entry.prototype.parseJSON = function(jsonData) {
     this.status = jsonData.status;
 }
 
-Entry.prototype.loadEntry = function(library) {
+Entry.prototype.loadEntry = async function(library) {
     if (!(library instanceof HTMLElement)) {
         throw TypeError("library argument needs to be a DOM element.");
     }
@@ -126,38 +153,10 @@ Entry.prototype.loadEntry = function(library) {
     const entryImage = document.createElement("img");
     entryImage.classList.add("entry-image");
     entryImage.alt = this.title;
-    fetch(this.image).then(response => {
-        if (!response.ok) {
-            throw Error(`Failed to fetch image: ${response.status} status.`);
-        }
-        return response.blob();
-    }).then(blob => {
-        const url = URL.createObjectURL(blob);
-        entryImage.src = url;
-    }).catch(error => {
-        console.error(error);
-        entryImage.src = "img/404.svg";
-    });
+    entryImage.src = await this.getImage();
 
     const entryStatus = document.createElement("i");
-    entryStatus.classList.add("entry-status", "fa-solid");
-    switch (this.status) {
-        case "completed": {
-            entryStatus.classList.add("fa-square-check");
-            break;
-        }
-        case "reading": {
-            entryStatus.classList.add("fa-square-minus");
-            break;
-        }
-        case "dropped": {
-            entryStatus.classList.add("fa-square-xmark");
-            break;
-        }
-        default: {
-            throw Error(`Invalid entry status: ${this.status}`);
-        }
-    }
+    entryStatus.classList.add(...this.getStatus());
 
     const entryTitle = document.createElement("p");
     entryTitle.classList.add("entry-title");
@@ -165,4 +164,71 @@ Entry.prototype.loadEntry = function(library) {
 
     this.entry.append(entryImage, entryStatus, entryTitle);
     library.prepend(this.entry);
+}
+
+Entry.prototype.updateEntry = async function() {
+    const entryImage = this.entry.querySelector(".entry-image");
+    if (!entryImage) {
+        throw Error(`".entry-image" element not found.`);
+    }
+
+    entryImage.alt = this.title;
+    entryImage.src = await this.getImage();
+
+    const entryStatus = this.entry.querySelector(".entry-status");
+    if (!entryStatus) {
+        throw Error(`".entry-status" element not found.`);
+    }
+
+    entryStatus.classList.remove(...entryStatus.classList);
+    entryStatus.classList.add(...this.getStatus());
+
+    const entryTitle = this.entry.querySelector(".entry-title");
+    if (!entryTitle) {
+        throw Error(`".entry-title" element not found.`);
+    }
+
+    entryTitle.innerText = this.title;
+}
+
+Entry.prototype.getImage = async function() {
+    try {
+        const response = await fetch(this.image);
+        if (!response.ok) {
+            throw Error(`Failed to fetch image: ${response.status} status.`);
+        }
+
+        const blob = await response.blob();
+        return URL.createObjectURL(blob);
+    } catch (error) {
+        console.error(error);
+        return "img/404.svg";
+    }
+}
+
+Entry.prototype.getStatus = function() {
+    let classList = ["entry-status", "fa-solid"];    
+    
+    switch (this.status) {
+        case "completed": {
+            classList.push("fa-square-check");
+            break;
+        }
+
+        case "reading": {
+            classList.push("fa-square-minus");
+            break;
+        }
+
+        case "dropped": {
+            classList.push("fa-square-xmark");
+            break;
+        }
+
+        default: {
+            throw Error(`Invalid entry status: ${this.status}`);
+        }
+    }
+
+    return classList;
 }

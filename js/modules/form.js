@@ -8,6 +8,7 @@ export default function Form(form) {
     }
 
     this.form = form;
+    this.fields = form.querySelectorAll("input[name]");
 }
 
 Form.prototype.resetForm = function() {
@@ -42,4 +43,42 @@ Form.prototype.removeSubmitListener = function() {
 
     this.form.removeEventListener("submit", this.submit);
     this.submit = null;
+}
+
+Form.prototype.insertValues = function(values) {
+    if (typeof values !== "object") {
+        throw TypeError("entry argument needs to be an object");
+    } else if (values === null) {
+        throw TypeError("entry argument cannot be a null object.");
+    }
+
+    for (const [key, value] of Object.entries(values)) {
+        const fields = [...this.fields].filter(field => {
+            return field.name === key;
+        });
+
+        if (fields.length === 0) {
+            continue;
+        }
+
+        if (fields[0].type === "radio") {
+            const radio = fields.find(radio => {
+                return radio.value === value;
+            });
+
+            if (!radio) {
+                throw Error(`No matching radio field for "${key}" key.`);
+            }
+
+            radio.checked = true;
+            continue;
+        }
+
+        if (fields.length > 1) {
+            throw Error(`More matching fields for "${key}" key than expected.`);
+        }
+
+        const field = fields[0];
+        field.value = value;
+    }
 }
