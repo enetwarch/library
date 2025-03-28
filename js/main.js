@@ -5,19 +5,19 @@ import Form from "./modules/form.js";
 
 window.addEventListener("load", () => {
     let library;
-    const storedLibrary = localStorage.getItem("library");
+    const storedEntries = localStorage.getItem("entries");
+    const libraryElement = document.getElementById("library");
 
-    if (!storedLibrary || !(storedLibrary instanceof Library)) {
-        const libraryElement = document.getElementById("library");
+    if (!storedEntries) {
         const sampleEntries = structuredClone(entries);
         library = new Library(libraryElement, sampleEntries);
     } else {
-        library = JSON.parse(storedLibrary);
-        library.loadEntries();
+        const parsedEntries = JSON.parse(storedEntries);
+        library = new Library(libraryElement, parsedEntries);
     }
 
     window.addEventListener("beforeunload", () => {
-        localStorage.setItem("library", JSON.stringify(library));
+        localStorage.setItem("entries", JSON.stringify(library.entries));
     });
 
     const modalFormElement = document.getElementById("modalForm");
@@ -65,6 +65,7 @@ window.addEventListener("load", () => {
         let deleteFunction = () => {
             const entryId = Number(currentEntryId);
             library.deleteEntry(entryId);
+            
             modalEntry.closeModal();
         }
 

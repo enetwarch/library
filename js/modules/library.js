@@ -49,12 +49,6 @@ Library.prototype.deleteEntry = function(id) {
     });
 }
 
-Library.prototype.loadEntries = function() {
-    this.entries.forEach(entry => {
-        entry.loadEntry(this.library);
-    });
-}
-
 Library.prototype.addListener = function(type, callback) {
     if (typeof type !== "string") {
         throw TypeError("type argument needs to be a string.");
