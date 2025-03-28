@@ -121,7 +121,7 @@ Main.prototype.updateEntry = function() {
     this.entryForm.insertValues(entry);
 
     this.entryForm.changeSubmitListener(formData => {
-        library.updateEntry(formData, this.currentEntryId);
+        this.library.updateEntry(formData, this.currentEntryId);
 
         this.modalForm.closeModal();
         this.modalEntry.closeModal();
