@@ -11,6 +11,7 @@ export default function Library(library, dataset) {
 
     this.library = library;    
     this.entries = [];
+    this.currentId = 0;
 
     dataset.forEach(data => this.addEntry(data));
 }
@@ -20,11 +21,32 @@ Library.prototype.addEntry = function(data) {
         throw TypeError("data argument needs to be an object.");
     }
 
-    const id = this.entries.length;
-    const entry = new Entry(data, id);
+    const entry = new Entry(data, this.currentId);
+    this.currentId++;
     
     entry.loadEntry(this.library);
     this.entries.push(entry);
+}
+
+Library.prototype.deleteEntry = function(id) {
+    if (typeof id !== "number") {
+        throw TypeError("id argument needs to be a number.");
+    }
+
+    const matchingEntry = this.entries.find(entry => {
+        const entryId = entry.entry.dataset.id;
+        return Number(entryId) === id;
+    });
+
+    if (!matchingEntry) {
+        return;
+    }
+
+    matchingEntry.entry.remove();
+
+    this.entries = this.entries.filter(entry => {
+        return entry !== matchingEntry;
+    });
 }
 
 Library.prototype.loadEntries = function() {

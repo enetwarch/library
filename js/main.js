@@ -8,9 +8,9 @@ window.addEventListener("load", () => {
     const storedLibrary = localStorage.getItem("library");
 
     if (!storedLibrary || !(storedLibrary instanceof Library)) {
-        const container = document.getElementById("output");
+        const libraryElement = document.getElementById("library");
         const sampleEntries = structuredClone(entries);
-        library = new Library(container, sampleEntries);
+        library = new Library(libraryElement, sampleEntries);
     } else {
         library = JSON.parse(storedLibrary);
         library.loadEntries();
@@ -24,29 +24,62 @@ window.addEventListener("load", () => {
     const newEntryElement = document.getElementById("newEntry");
     const modalForm = new Modal(modalFormElement, newEntryElement);
 
+    modalForm.addCallback("close", () => {
+        entryForm.resetForm();
+    });
+
     const entryFormElement = document.getElementById("entryForm");
-    const entryForm = new Form(entryFormElement, formData => {
+    const entryForm = new Form(entryFormElement);
+    
+    entryForm.changeSubmitListener(formData => {
         library.addEntry(formData);
         modalForm.closeModal();
     });
 
-    const modalEntryElement = document.getElementById("modalEntry");
-    const modalEntry = new Modal(modalEntryElement);
-    
-    const entryImage = document.getElementById("entryImage");
-    const entryTitle = document.getElementById("entryTitle");
-    const entryDescription = document.getElementById("entryDescription");
+    let currentEntryId;
 
-    library.addListener("click", (entry) => {
+    const entryImageElement = document.getElementById("entryImage");
+    const entryTitleElement = document.getElementById("entryTitle");
+
+    library.addListener("click", entry => {
         if (typeof entry !== "object") {
             throw TypeError("entry argument needs to be an object.");
         }
 
-        entryTitle.innerText = entry.title;
-        entryImage.src = entry.image;
+        entryTitleElement.innerText = entry.title;
+        entryImageElement.src = entry.image;
+        currentEntryId = entry.entry.dataset.id;
 
         setTimeout(() => {
             modalEntry.showModal();
         }, 100);
+    });
+
+    const modalEntryElement = document.getElementById("modalEntry");
+    const modalEntry = new Modal(modalEntryElement);
+
+    const deleteElement = document.getElementById("delete");
+    const editElement = document.getElementById("edit");
+
+    modalEntry.addCallback("open", () => {
+        let deleteFunction = () => {
+            const entryId = Number(currentEntryId);
+            library.deleteEntry(entryId);
+            modalEntry.closeModal();
+        }
+
+        let editFunction = () => {
+
+        }
+
+        deleteElement.addEventListener("click", deleteFunction);
+        editElement.addEventListener("click", editFunction);
+
+        modalEntry.addCallback("close", () => {
+            deleteElement.removeEventListener("click", deleteFunction);
+            editElement.removeEventListener("click", editFunction);
+
+            modalEntry.removeCallback("close");
+        });
     });
 });
