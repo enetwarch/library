@@ -12,18 +12,7 @@ export default function Form(form, submit) {
     this.form = form;
     this.submit = submit;
 
-    this.addInputListeners();
     this.addSubmitListener();
-}
-
-Form.prototype.addInputListeners = function() {
-    const description = document.getElementById("description");
-    if (description) {
-        description.addEventListener("input", () => {
-            description.style.height = "auto";
-            description.style.height = `${description.scrollHeight}px`;
-        });
-    }
 }
 
 Form.prototype.addSubmitListener = function() {

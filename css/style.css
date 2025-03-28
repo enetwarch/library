@@ -204,8 +204,8 @@ body > * {
     flex-direction: column;
     gap: 1rem;
     margin: 0 auto;
-    max-width: 600px;
-    padding: 1rem;
+    max-width: 20rem;
+    padding: 2rem;
     position: relative;
     width: 100%;
 }
@@ -305,8 +305,15 @@ body > * {
     cursor: pointer;
 }
 
+.button-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 1rem;
+}
+
 .submit-button {
-    background-color: var(--blue);
+    background-color: var(--green);
     border: none;
     border-radius: 0.5rem;
     color: var(--light-1);
@@ -323,62 +330,17 @@ body > * {
     opacity: 0.9;
 }
 
-.modal-entry-container {
-    gap: 1rem;
-}
-
 .modal-entry-image {
     border-radius: 0.5rem;
-    float: left;
-    height: 22.5rem;
+    height: auto;
     margin-right: 1rem;
-    margin-bottom: 0.2rem;
     object-fit: cover;
-    width: 15rem;
+    width: 100%;
 }
 
 .modal-entry-title {
     color: var(--light-1);
-    margin-bottom: 1rem;
-    word-break: break-word;
-    padding-right: 1.5rem;
-}
-
-.modal-entry-description {
-    color: var(--light-3);
-}
-
-@media only screen and (max-width: 600px) {
-    .modal-entry-container {
-        align-items: center;
-        display: flex;
-        flex-direction: column;
-        padding-top: 2rem;
-    }
-
-    .modal-entry-image {
-        float: none;
-        margin-bottom: 0;
-        margin-right: 0;
-    }
-
-    .modal-entry-title {
-        margin-bottom: 0;
-        text-align: center;
-    }
-}
-
-@media only screen and (max-width: 400px) {
-    .modal-entry-image {
-        height: 20rem;
-        width: 13.25rem;
-    }
-}
-
-.button-container {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
+    text-align: center;
 }
 
 .delete-button {
@@ -401,24 +363,12 @@ body > * {
     transition: opacity 0.25s;
 }
 
-.read-button {
-    background-color: var(--green);
-    border-radius: 0.5rem;
-    color: var(--light-1);
-    flex-grow: 1;
-    padding: 1rem;
-    text-align: center;
-    transition: opacity 0.25s;
-}
-
 .delete-button:hover,
-.edit-button:hover,
-.read-button:hover {
+.edit-button:hover {
     cursor: pointer;
 }
 
 .delete-button:active,
-.edit-button:active,
-.read-button:active {
+.edit-button:active {
     opacity: 0.9;
 }

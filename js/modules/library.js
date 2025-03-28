@@ -1,15 +1,15 @@
-export default function Library(container, dataset) {
+export default function Library(library, dataset) {
     if (!new.target) {
         throw Error(`Use the "new" keyword on the Entries constructor.`);
     }
 
-    if (!(container instanceof HTMLElement)) {
-        throw TypeError("container argument needs to be a DOM element.");
+    if (!(library instanceof HTMLElement)) {
+        throw TypeError("library argument needs to be a DOM element.");
     } else if (typeof dataset !== "object") {
         throw TypeError("dataset argument needs to be an object.");
     }
 
-    this.container = container;    
+    this.library = library;    
     this.entries = [];
 
     dataset.forEach(data => this.addEntry(data));
@@ -23,13 +23,13 @@ Library.prototype.addEntry = function(data) {
     const id = this.entries.length;
     const entry = new Entry(data, id);
     
-    entry.loadEntry(this.container);
+    entry.loadEntry(this.library);
     this.entries.push(entry);
 }
 
 Library.prototype.loadEntries = function() {
     this.entries.forEach(entry => {
-        entry.loadEntry(this.container);
+        entry.loadEntry(this.library);
     });
 }
 
@@ -40,7 +40,7 @@ Library.prototype.addListener = function(type, callback) {
         throw TypeError("callback argument needs to be a function.");
     }
 
-    this.container.addEventListener(type, event => {
+    this.library.addEventListener(type, event => {
         const element = event.target.closest(".entry");
         if (!element) {
             return;
@@ -83,7 +83,6 @@ Entry.prototype.parseFormData = function(formData) {
     this.title = formData.get("title");
     this.image = formData.get("image");
     this.status = formData.get("status");
-    this.description = formData.get("description");
 }
 
 Entry.prototype.parseJSON = function(jsonData) {
@@ -91,7 +90,7 @@ Entry.prototype.parseJSON = function(jsonData) {
         throw TypeError("jsonData argument needs to be an object.");
     }
 
-    const requiredKeys = ["title", "image", "status", "description"];
+    const requiredKeys = ["title", "image", "status"];
     for (const key of requiredKeys) {
         if (!(key in jsonData)) {
             throw TypeError(`${key} key is required in jsonData argument.`);
@@ -101,12 +100,11 @@ Entry.prototype.parseJSON = function(jsonData) {
     this.title = jsonData.title;
     this.image = jsonData.image;
     this.status = jsonData.status;
-    this.description = jsonData.description;
 }
 
-Entry.prototype.loadEntry = function(container) {
-    if (!(container instanceof HTMLElement)) {
-        throw TypeError("container argument needs to be a DOM element.");
+Entry.prototype.loadEntry = function(library) {
+    if (!(library instanceof HTMLElement)) {
+        throw TypeError("library argument needs to be a DOM element.");
     }
 
     const entryImage = document.createElement("img");
@@ -150,5 +148,5 @@ Entry.prototype.loadEntry = function(container) {
     entryTitle.innerText = this.title;
 
     this.entry.append(entryImage, entryStatus, entryTitle);
-    container.prepend(this.entry);
+    library.prepend(this.entry);
 }

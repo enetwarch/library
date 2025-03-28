@@ -42,9 +42,8 @@ window.addEventListener("load", () => {
             throw TypeError("entry argument needs to be an object.");
         }
 
-        entryImage.src = entry.image;
         entryTitle.innerText = entry.title;
-        entryDescription.innerText = entry.description;
+        entryImage.src = entry.image;
 
         setTimeout(() => {
             modalEntry.showModal();
