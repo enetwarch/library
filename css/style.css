@@ -88,7 +88,7 @@ body > * {
 }
 
 .search-input:focus {
-    outline: none;
+    outline: 2px solid var(--light-1);
 }
 
 .new-entry-button {
@@ -246,7 +246,7 @@ body > * {
 }
 
 .form-field-input:focus {
-    outline: 1px var(--light-1);
+    outline: 2px solid var(--light-1);
 }
 
 .form-field-input::placeholder {
@@ -365,6 +365,11 @@ body > * {
     padding: 1rem;
     text-align: center;
     transition: opacity 0.25s;
+}
+
+.delete-button:focus,
+.edit-button:focus {
+    outline: 2px solid var(--light-1);
 }
 
 .delete-button:hover,
