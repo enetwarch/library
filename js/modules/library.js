@@ -16,12 +16,12 @@ export default function Library(library, dataset) {
     dataset.forEach(data => this.addEntry(data));
 }
 
-Library.prototype.addEntry = async function(data) {
+Library.prototype.addEntry = function(data) {
     if (typeof data !== "object") {
         throw TypeError("data argument needs to be an object.");
     }
 
-    const entry = await new Entry(data, this.currentId);
+    const entry = new Entry(data, this.currentId);
     this.currentId++;
     
     entry.loadEntry(this.library);
