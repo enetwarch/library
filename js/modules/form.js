@@ -1,84 +1,72 @@
-export default function Form(form) {
+export default function Form(element, fieldQueries = "[name]", submitButtonQuery = `button[type="submit"]`) {
     if (!new.target) {
         throw Error(`Use the "new" keyword on the Form constructor.`);
     }
 
-    if (!(form instanceof HTMLElement)) {
-        throw TypeError("form argument needs to be an HTML Element.");
+    if (!(element instanceof HTMLElement)) {
+        throw TypeError("element argument needs to be an HTML Element.");
+    } else if (typeof fieldQueries !== "string") {
+        throw TypeError("fieldQuery argument must be a string.");
+    } else if (typeof submitButtonQuery !== "string") {
+        throw TypeError("submitButtonQuery argument must be a string.");
     }
 
-    this.form = form;
-    this.fields = form.querySelectorAll("input[name]");
+    this.element = element;
+
+    this.fields = Array.from(this.element.querySelectorAll(fieldQueries));
+    if (this.fields.length === 0) {
+        throw Error(`element argument does not have fields with "${fieldQueries}" queries.`);
+    }
+
+    this.submitButton = this.element.querySelector(submitButtonQuery);
+    if (!this.submitButton) {
+        throw Error(`element argument does not have a submit button with "${submitButtonQuery}" query.`);
+    }
+
+    this.submitEvent = null;
 }
 
-Form.prototype.resetForm = function() {
-    this.form.reset();
+Form.prototype.submit = function() {
+    this.submitButton.click();
 }
 
-Form.prototype.changeSubmitListener = function(submit) {
+Form.prototype.reset = function() {
+    this.element.reset();
+}
+
+Form.prototype.onSubmit = function(submit) {
     if (typeof submit !== "function") {
-        throw TypeError("submit argument needs to be a function.");
+        throw TypeError("submit argument must be a function.");
     }
 
-    if (this.submit) {
-        this.removeSubmitListener();
+    if (this.submitEvent) {
+        this.element.removeEventListener("submit", this.submitEvent);
     }
 
-    this.submit = event => {
+    this.submitEvent = event => {
         event.preventDefault();
 
-        const formData = new FormData(this.form);
+        const formData = new FormData(this.element);
         submit(formData);
 
-        this.resetForm();
+        this.reset();
     }
 
-    this.form.addEventListener("submit", this.submit);
-}
-
-Form.prototype.removeSubmitListener = function() {
-    if (!this.submit) {
-        return;
-    }
-
-    this.form.removeEventListener("submit", this.submit);
-    this.submit = null;
+    this.element.addEventListener("submit", this.submitEvent);
 }
 
 Form.prototype.insertValues = function(values) {
     if (typeof values !== "object") {
-        throw TypeError("entry argument needs to be an object");
+        throw TypeError("entry argument must be an object");
     } else if (values === null) {
-        throw TypeError("entry argument cannot be a null object.");
+        throw TypeError("entry argument must not be null.");
     }
 
-    for (const [key, value] of Object.entries(values)) {
-        const fields = [...this.fields].filter(field => {
-            return field.name === key;
-        });
-
-        if (fields.length === 0) {
-            continue;
-        }
-
-        if (fields[0].type === "radio") {
-            const radio = fields.find(radio => {
-                return radio.value === value;
-            });
-
-            if (!radio) {
-                throw Error(`No matching radio field for "${key}" key.`);
+    Object.entries(values).forEach(([key, value]) => {
+        this.fields.forEach(field => {
+            if (field.name === key) {
+                field.value = value;
             }
-
-            radio.checked = true;
-            continue;
-        }
-
-        if (fields.length > 1) {
-            throw Error(`More matching fields for "${key}" key than expected.`);
-        }
-
-        const field = fields[0];
-        field.value = value;
-    }
+        });
+    });
 }

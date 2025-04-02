@@ -1,0 +1,26 @@
+[
+    {
+        "id": "createButton",
+        "type": "button"
+    },
+    {
+        "id": "deleteButton",
+        "type": "button"
+    },
+    {
+        "id": "editButton",
+        "type": "button"
+    },
+    {
+        "id": "entryModal",
+        "type": "modal"
+    },
+    {
+        "id": "viewModal",
+        "type": "modal"
+    },
+    {
+        "id": "entryForm",
+        "type": "form"
+    }
+]

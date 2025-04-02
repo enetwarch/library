@@ -15,14 +15,14 @@
                 <i class="search-icon fa-solid fa-magnifying-glass"></i>
                 <input id="searchInput" class="search-input" type="search" placeholder="Search">
             </div>
-            <div id="newEntry" class="new-entry-button">
+            <button id="createButton" class="new-entry-button" type="button">
                 <i class="fa-solid fa-plus"></i>
-            </div>    
+            </button>    
         </div>
         <div id="library" class="output-container">
 
         </div>
-        <dialog id="modalForm" class="modal">
+        <dialog id="entryModal" class="modal">
             <form id="entryForm" class="modal-container">
                 <i class="modal-close fa-solid fa-xmark"></i>
                 <div class="form-field">
@@ -58,14 +58,14 @@
                 </div>
             </form>
         </dialog>
-        <dialog id="modalEntry" class="modal">
+        <dialog id="viewModal" class="modal">
             <div class="modal-container">
                 <i class="modal-close fa-solid fa-xmark"></i>
                 <h3 id="entryTitle" class="modal-entry-title"></h3>
                 <img id="entryImage" class="modal-entry-image">
                 <div class="button-container">
-                    <button id="delete" class="delete-button" type="button">Delete</button>
-                    <button id="edit" class="edit-button" type="button">Edit</button>
+                    <button id="deleteButton" class="delete-button" type="button">Delete</button>
+                    <button id="editButton" class="edit-button" type="button">Edit</button>
                 </div>
             </div>
         </dialog>
