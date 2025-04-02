@@ -68,10 +68,9 @@ Form.prototype.insertValues = function(values) {
 
             if (field.type === "radio") {
                 field.checked = field.value === value;
-                continue;
+            } else {
+                field.value = value;
             }
-
-            field.value = value;
         }
     }
 }

@@ -15,9 +15,11 @@
                 <i class="search-icon fa-solid fa-magnifying-glass"></i>
                 <input id="searchInput" class="search-input" type="search" placeholder="Search">
             </div>
-            <button id="createButton" class="new-entry-button" type="button">
-                <i class="fa-solid fa-plus"></i>
-            </button>    
+            <div class="button-field">
+                <button id="createButton" class="blue-input-button" type="button">
+                    <i class="fa-solid fa-plus"></i>
+                </button>    
+            </div>
         </div>
         <div id="library" class="output-container">
 
@@ -38,20 +40,29 @@
                     <div class="radio-container">
                         <div class="radio-field">
                             <input id="completed" class="radio-field-input" name="status" value="completed" type="radio">
+                            <div class="radio-button">
+                                <i class="radio-icon fa-solid fa-check"></i>
+                            </div>
                             <label class="radio-field-label" for="completed">Completed</label>
                         </div>
                         <div class="radio-field">
                             <input id="reading" class="radio-field-input" name="status" value="reading" type="radio" checked>
+                            <div class="radio-button">
+                                <i class="radio-icon fa-solid fa-minus"></i>
+                            </div>
                             <label class="radio-field-label" for="reading">Reading</label>
                         </div>
                         <div class="radio-field">
                             <input id="dropped" class="radio-field-input" name="status" value="dropped" type="radio">
+                            <div class="radio-button">
+                                <i class="radio-icon fa-solid fa-xmark"></i>
+                            </div>
                             <label class="radio-field-label" for="dropped">Dropped</label>
                         </div>
                     </div>
                 </div>
                 <div class="button-container">
-                    <button class="submit-button" type="submit">Confirm</button>
+                    <button class="green-button" type="submit">Confirm</button>
                 </div>
             </form>
         </dialog>
@@ -61,8 +72,8 @@
                 <h3 id="entryTitle" class="modal-entry-title"></h3>
                 <img id="entryImage" class="modal-entry-image">
                 <div class="button-container">
-                    <button id="deleteButton" class="delete-button" type="button">Delete</button>
-                    <button id="editButton" class="edit-button" type="button">Edit</button>
+                    <button id="deleteButton" class="red-button" type="button">Delete</button>
+                    <button id="editButton" class="blue-button" type="button">Edit</button>
                 </div>
             </div>
         </dialog>

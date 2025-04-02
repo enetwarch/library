@@ -81,11 +81,13 @@ Entry.prototype.parseJSONData = function(jsonData, requiredKeys = ["title", "ima
     this.status = jsonData.status;
 }
 
-Entry.prototype.display = async function(container, imageClass = "entry-image", titleClass = "entry-title") {
+Entry.prototype.display = async function(container, imageClass = "entry-image", statusContainerClass = "entry-status-container", titleClass = "entry-title") {
     if (!(container instanceof HTMLElement)) {
         throw TypeError("container argument must be an HTML element.");
     } else if (typeof imageClass !== "string") {
         throw TypeError("imageClass argument must be a string.");
+    } else if (typeof statusContainerClass !== "string") {
+        throw TypeError("statusContainerClass argument must be a string.");
     } else if (typeof titleClass !== "string") {
         throw TypeError("titleClass argument must be a string.");
     }
@@ -95,21 +97,26 @@ Entry.prototype.display = async function(container, imageClass = "entry-image", 
     image.alt = this.getTitle();
     image.src = await Entry.getImageSource(this.getImage());
 
-    const status = document.createElement("i");
-    status.classList.add(...Entry.getStatusClassList(this.getStatus()));
+    const statusContainer = document.createElement("div");
+    statusContainer.classList.add(statusContainerClass);
+
+    const statusIcon = document.createElement("i");
+    statusIcon.classList.add(...Entry.getStatusIconClassList(this.getStatus()));
+
+    statusContainer.appendChild(statusIcon);
 
     const title = document.createElement("p");
     title.classList.add(titleClass);
     title.innerText = this.getTitle();
 
-    this.element.append(image, status, title);
+    this.element.append(image, statusContainer, title);
     container.prepend(this.element);
 }
 
-Entry.prototype.update = async function(data, imageQuery = ".entry-image", statusQuery = ".entry-status", titleQuery = ".entry-title") {
+Entry.prototype.update = async function(data, imageQuery = ".entry-image", statusIconQuery = ".entry-status-icon", titleQuery = ".entry-title") {
     if (typeof imageQuery !== "string") {
         throw TypeError("imageQuery argument must be a string.");
-    } else if (typeof statusQuery !== "string") {
+    } else if (typeof statusIconQuery !== "string") {
         throw TypeError("statusQuery argument must be a string.");
     } else if (typeof titleQuery !== "string") {
         throw TypeError("titleQuery argument must be a string.");
@@ -125,13 +132,13 @@ Entry.prototype.update = async function(data, imageQuery = ".entry-image", statu
     image.alt = this.getTitle();
     image.src = await Entry.getImageSource(this.getImage());
 
-    const status = this.element.querySelector(statusQuery);
-    if (!status) {
-        throw Error(`status query "${statusQuery}" element not found.`);
+    const statusIcon = this.element.querySelector(statusIconQuery);
+    if (!statusIcon) {
+        throw Error(`status query "${statusIconQuery}" element not found.`);
     }
 
-    status.classList.remove(...status.classList);
-    status.classList.add(...Entry.getStatusClassList(this.getStatus()));
+    statusIcon.classList.remove(...statusIcon.classList);
+    statusIcon.classList.add(...Entry.getStatusIconClassList(this.getStatus()));
 
     const title = this.element.querySelector(titleQuery);
     if (!title) {
@@ -166,15 +173,15 @@ Entry.getImageSource = async function(image, fallback = "img/404.svg") {
     }
 }
 
-Entry.getStatusClassList = function(status) {
+Entry.getStatusIconClassList = function(status) {
     if (typeof status !== "string") {
         throw TypeError("status argument must be a string.");
     }
 
     switch (status) {
-        case "completed": return ["entry-status", "fa-solid", "fa-square-check"];
-        case "reading":  return ["entry-status", "fa-solid", "fa-square-minus"];
-        case "dropped":  return ["entry-status", "fa-solid", "fa-square-xmark"];
+        case "completed": return ["entry-status-icon", "fa-solid", "fa-check"];
+        case "reading":  return ["entry-status-icon", "fa-solid", "fa-minus"];
+        case "dropped":  return ["entry-status-icon", "fa-solid", "fa-xmark"];
 
         default: throw Error(`Invalid entry status: "${status}".`);
     }
