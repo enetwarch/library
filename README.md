@@ -9,6 +9,9 @@ A basic library that contains books. Heavily inspired from [Tachiyomi](https://g
 
 The books I chose for this project are my favorite manhwas, including the popular Solo Leveling. I used [ComicK](https://comick.io/) as the source for the book covers as they have multiple covers to choose from. I also recommend getting your image URLs here if you plan on using this website.
 
+> [!NOTE]
+> Unrelated to the project, but I read my mangas/manhwas/manhuas using the [Mihon](https://mihon.app/) app. It is a free and open source fork of Tachiyomi.
+
 ### Resources
 
 * [**ComicK**](https://comick.io/): Like mentioned earlier, this site is the source of the book cover URLs.
@@ -23,9 +26,11 @@ The books I chose for this project are my favorite manhwas, including the popula
     * [Book](https://fontawesome.com/icons/book): Favicon
     * [Magnifying Glass](https://fontawesome.com/icons/magnifying-glass): Search bar
     * [Plus](https://fontawesome.com/icons/plus): New entry button
-    * [Square Check](https://fontawesome.com/icons/square-check): Completed Status
-    * [Square Minus](https://fontawesome.com/icons/square-minus): Reading Status
-    * [Square Xmark](https://fontawesome.com/icons/square-xmark): Dropped Status
+    * [Check](https://fontawesome.com/icons/check): Completed Status
+    * [Minus](https://fontawesome.com/icons/minus): Reading Status
+    * [Xmark](https://fontawesome.com/icons/xmark): Dropped Status
 
-> [!NOTE]
-> Unrelated to the project, but I read my mangas/manhwas/manhuas using the [Mihon](https://mihon.app/) app. It is a free and open source fork of Tachiyomi.
+
+### License
+
+* [Mit License](LICENSE)
