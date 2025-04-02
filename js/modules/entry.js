@@ -37,6 +37,10 @@ Entry.prototype.getImage = function() {
     return this.image;
 }
 
+Entry.prototype.getStatus = function() {
+    return this.status;
+}
+
 Entry.prototype.parseData = function(data) {
     if (data instanceof FormData) {
         this.parseFormData(data);
@@ -88,15 +92,15 @@ Entry.prototype.display = async function(container, imageClass = "entry-image", 
 
     const image = document.createElement("img");
     image.classList.add(imageClass);
-    image.alt = this.title;
-    image.src = await Entry.getImageSource(this.image);
+    image.alt = this.getTitle();
+    image.src = await Entry.getImageSource(this.getImage());
 
     const status = document.createElement("i");
-    status.classList.add(...Entry.getStatusClassList(this.status));
+    status.classList.add(...Entry.getStatusClassList(this.getStatus()));
 
     const title = document.createElement("p");
     title.classList.add(titleClass);
-    title.innerText = this.title;
+    title.innerText = this.getTitle();
 
     this.element.append(image, status, title);
     container.prepend(this.element);
@@ -118,8 +122,8 @@ Entry.prototype.update = async function(data, imageQuery = ".entry-image", statu
         throw Error(`image query "${imageQuery}" element not found.`);
     }
 
-    image.alt = this.title;
-    image.src = await Entry.getImageSource(this.image);
+    image.alt = this.getTitle();
+    image.src = await Entry.getImageSource(this.getImage());
 
     const status = this.element.querySelector(statusQuery);
     if (!status) {
@@ -127,15 +131,14 @@ Entry.prototype.update = async function(data, imageQuery = ".entry-image", statu
     }
 
     status.classList.remove(...status.classList);
-    status.classList.add(...Entry.getStatusClassList(this.status));
-    console.log(...Entry.getStatusClassList(this.status));
+    status.classList.add(...Entry.getStatusClassList(this.getStatus()));
 
     const title = this.element.querySelector(titleQuery);
     if (!title) {
         throw Error(`title query "${titleQuery}" element not found.`);
     }
 
-    title.innerText = this.title;
+    title.innerText = this.getTitle();
 }
 
 Entry.prototype.remove = function() {

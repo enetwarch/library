@@ -62,11 +62,16 @@ Form.prototype.insertValues = function(values) {
         throw TypeError("entry argument must not be null.");
     }
 
-    Object.entries(values).forEach(([key, value]) => {
-        this.fields.forEach(field => {
-            if (field.name === key) {
-                field.value = value;
+    for (const [key, value] of Object.entries(values)) {
+        for (const field of this.fields) {
+            if (field.name !== key) continue;
+
+            if (field.type === "radio") {
+                field.checked = field.value === value;
+                continue;
             }
-        });
-    });
+
+            field.value = value;
+        }
+    }
 }

@@ -91,7 +91,7 @@ UI.prototype.initializeListeners = function() {
     this.deleteButton.addEventListener("click", this.onDeleteButtonClick.bind(this));
     this.editButton.addEventListener("click", this.onEditButtonClick.bind(this));
 
-    window.addEventListener("beforeunload", this.saveEntries.bind(this));
+    window.addEventListener("beforeunload", this.onWindowBeforeunload.bind(this));
 }
 
 UI.prototype.onCreateButtonClick = function() {
@@ -164,7 +164,7 @@ UI.prototype.onEditButtonClick = function() {
     });
 }
 
-UI.prototype.saveEntries = function() {
+UI.prototype.onWindowBeforeunload = function() {
     const entries = JSON.stringify(this.library.getEntries());
     localStorage.setItem("entries", entries);
 }
