@@ -18,7 +18,7 @@ export default function Entry(data, id, entryClass = "entry") {
 }
 
 Entry.prototype.getId = function() {
-    return this.element.dataset.id;
+    return Number(this.element.dataset.id);
 }
 
 Entry.prototype.setId = function(id) {

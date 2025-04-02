@@ -146,7 +146,7 @@ UI.prototype.onDeleteButtonClick = function() {
 }
 
 UI.prototype.onEditButtonClick = function() {
-    const id = parseInt(this.library.getClickedEntryId());
+    const id = this.library.getClickedEntryId();
     const entry = this.library.findEntry(id);
     this.entryForm.insertValues(entry);
 

@@ -15,7 +15,7 @@ export default function Library(element, entries) {
 
     this.element = element;
     this.entries = entries;
-    this.clickedEntryId = "-1";
+    this.clickedEntryId = -1;
 
     this.entries.forEach(entry => entry.display(this.element));
 }
@@ -25,7 +25,7 @@ Library.prototype.getNextId = function() {
 }
 
 Library.prototype.getClickedEntryId = function() {
-    return this.clickedEntryId;
+    return Number(this.clickedEntryId);
 }
 
 Library.prototype.getEntries = function() {
@@ -37,7 +37,7 @@ Library.prototype.setClickedEntryId = function(value) {
         throw TypeError("value argument must be a number.");
     }
 
-    this.clickedEntryId = value.toString();
+    this.clickedEntryId = value;
 }
 
 Library.prototype.addEntry = function(entry) {
@@ -56,16 +56,16 @@ Library.prototype.updateEntry = function(data, id) {
         throw TypeError("id argument needs to be a number.");
     }
 
-    const entry = this.findEntry(parseInt(id));
+    const entry = this.findEntry(id);
     entry.update(data);
 }
 
 Library.prototype.deleteEntry = function(id) {
-    if (typeof id !== "string") {
-        throw TypeError("id argument needs to be a string.");
+    if (typeof id !== "number") {
+        throw TypeError("id argument needs to be a number.");
     }
 
-    const entry = this.findEntry(parseInt(id));
+    const entry = this.findEntry(id);
     if (!entry) return;
 
     const index = this.entries.indexOf(entry)
@@ -82,7 +82,7 @@ Library.prototype.findEntry = function(id) {
         throw TypeError("id argument needs to be a number.");
     }
 
-    const entry = this.entries.find(entry => entry.getId() === id.toString());
+    const entry = this.entries.find(entry => entry.getId() === id);
     return entry || null;
 }
 
@@ -101,8 +101,8 @@ Library.prototype.onEntryClick = function(callback, entryQuery = ".entry") {
         const element = event.target.closest(entryQuery);
         if (!element) return;
 
-        this.clickedEntryId = element.dataset.id;
-        const entry = this.findEntry(parseInt(this.clickedEntryId));
+        this.setClickedEntryId(Number(element.dataset.id));
+        const entry = this.findEntry(this.getClickedEntryId());
 
         callback(entry);
     });
