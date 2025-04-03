@@ -117,7 +117,7 @@ body > * {
     transition: opacity 0.25s;
 }
 
-.blue-input-button:focus {
+.blue-input-button:focus-visible {
     outline: 2px solid var(--light-1);
 }
 
@@ -394,9 +394,9 @@ body > * {
     transition: opacity 0.25s;
 }
 
-.red-button:focus,
-.green-button:focus,
-.blue-button:focus {
+.red-button:focus-visible,
+.green-button:focus-visible,
+.blue-button:focus-visible {
     outline: 2px solid var(--light-1);
 }
 
