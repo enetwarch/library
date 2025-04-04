@@ -1,4 +1,4 @@
-# [Library](https://enetwarch.github.io/library/)
+# Library
 
 A basic library that contains books. Heavily inspired from [Tachiyomi](https://github.com/tachiyomiorg). This simple web application replicates the basics of **CRUD (Create, Read, Update, and Delete)** operations. 
 
